@@ -25,4 +25,16 @@ class Crud{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function update($query)
+    {
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
+
+    public function delete($query)
+    {
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
 }

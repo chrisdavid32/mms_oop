@@ -8,10 +8,12 @@ $c = new Crud;
 //     'mv_year_released' => '2000-12-01',
 // ];
 
-$data = [
-    'gnr_name' => 'Musical',
-];
+// $data = [
+//     'gnr_name' => 'Musical',
+// ];
 
-$c->create($data, 'genres');
+// $c->create($data, 'genres');
+$result = $c->read("SELECT * FROM movies");
+var_dump($result);
 
 // getDbConnection();
