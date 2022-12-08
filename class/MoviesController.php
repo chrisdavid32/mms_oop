@@ -9,5 +9,4 @@ class MoviesController{
         $this->crud = new Crud();
     }
     
-
 }
