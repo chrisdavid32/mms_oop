@@ -226,7 +226,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn pull-right">Submit</button>
-                            <a href="list-movies.html" class="btn pull-right" style="margin-right: 5px;">Back</a>
+                            <a href="list-movies.php" class="btn pull-right" style="margin-right: 5px;">Back</a>
                         </div>
                     </div>
                 </form>

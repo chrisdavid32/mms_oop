@@ -1,5 +1,6 @@
 $('#datepicker').datepicker({
-    language: 'engS'
+    dateFormat: 'yyyy-mm-dd',
+    language: 'engS',
 });
 
 $('.genre').chosen();
