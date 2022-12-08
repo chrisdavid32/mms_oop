@@ -199,7 +199,7 @@
                                     include_once"../class/Crud.php";
                                     $crud = new Crud();
                                     $genres = $crud->read("select * from genres");
-                                    foreach ($genres as $key => $genre) { ?>
+                                     foreach ($genres as $key => $genre) { ?>
                                        <option value="<?=$genre['gnr_id'] ?>"><?=$genre['gnr_name'] ?></option>   
                                   <?php } ?>
                                 
