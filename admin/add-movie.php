@@ -1,3 +1,10 @@
+<?php
+    if(($_SERVER['REQUEST_METHOD'])== 'POST'){
+        include_once"../class/MoviesController.php";
+        $movies = new MoviesController();
+        $movies->addMovies();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +27,8 @@
     <meta name="theme-color" content="#ffffff">
 
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css" integrity="sha512-YdYyWQf8AS4WSB0WWdc3FbQ3Ypdm0QCWD2k4hgfqbQbRCJBEgX0iAegkl2S1Evma5ImaVXLBeUkIlP6hQ1eYKQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
 
 
     <!-- Include English language -->
@@ -173,7 +182,7 @@
                 <h4>Add Movie</h4>
             </div>
             <div id="add-movie-form-container">
-                <form class="form-horizontal" method="post" id="add-movie-form" action='/movies_/admin.php?action=add' autocomplete="off" enctype="multipart/form-data" />
+                <form class="form-horizontal" method="post" id="add-movie-form" action='' autocomplete="off" enctype="multipart/form-data" />
 
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="email">Title:</label>
@@ -237,6 +246,8 @@
     </div>
 </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js" integrity="sha512-RCgrAvvoLpP7KVgTkTctrUdv7C6t7Un3p1iaoPr1++3pybCyCsCZZN7QEHMZTcJTmcJ7jzexTO+eFpHk4OCFAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="../js/app.js"></script>
 </body>
 </html>
