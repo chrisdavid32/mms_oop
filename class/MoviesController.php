@@ -16,6 +16,7 @@ class MoviesController{
             'mv_year_released' => $_POST['mv_year_released']
         ];
 
+        $movies_genres = isset($_POST['genres']) ? $_POST['genres']: "";
         $this->crud->create($data, 'movies');
     }
     
