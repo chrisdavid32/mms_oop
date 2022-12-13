@@ -40,7 +40,7 @@ class MoviesController{
         LEFT JOIN mv_genres AS mv ON mv.mvg_ref_movie = m.mv_id 
         LEFT JOIN genres AS g ON mv.mvg_ref_genre = g.gnr_id
         LEFT JOIN images AS i ON i.img_ref_movie = m.mv_id
-        GROUP BY m.mv_id, i.img_path";
+        GROUP BY m.mv_id, i.img_path ORDER BY m.mv_id DESC";
         $result =  $this->crud->read($query);
         return $result;
     }
@@ -59,6 +59,18 @@ class MoviesController{
         ];
 
         $this->crud->create($image_info, 'images');
+    }
+
+    public function getMovie($mv_id)
+    {
+        $query = "SELECT m.mv_id, m.mv_title, GROUP_CONCAT(g.gnr_name) genres,m.mv_year_released,i.img_path FROM movies AS m
+        LEFT JOIN mv_genres AS mv ON mv.mvg_ref_movie = m.mv_id 
+        LEFT JOIN genres AS g ON mv.mvg_ref_genre = g.gnr_id
+        LEFT JOIN images AS i ON i.img_ref_movie = m.mv_id
+        where m.mv_id = $mv_id
+        GROUP BY m.mv_id, i.img_path LIMIT 1";
+        $result =  $this->crud->read($query);
+        return $result;
     }
     
 }

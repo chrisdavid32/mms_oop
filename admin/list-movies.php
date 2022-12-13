@@ -167,7 +167,7 @@
                 <div id="main-panel-left-sidebar">
                     <div id ="add-btn-container">
                         <div class = "sidebar-row">
-                            <a href="add-movie.html" class = "btn btn-add">
+                            <a href="add-movie.php" class = "btn btn-add">
                                 <i class="fas fa-plus"></i>
                                 Add New Movie</a>
                         </div>
@@ -228,7 +228,7 @@
                             <td><?= $movie['mv_year_released'] ?></td>
                             <td style="width:15px"><img src="../<?=$movie['img_path'] ?>" height="50px" width="50px"></td>
                             <td style="width:15px">
-                                <a href="admin.php?action=edit-movie&id=54">edit</a>
+                                <a href="edit-movie.php?id=<?=$movie['mv_id'] ?>">edit</a>
                                 <a href="admin.php?action=edit-movie">delete</a>
                             </td>
                         </tr>
