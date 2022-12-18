@@ -2,10 +2,10 @@
  include_once"../class/MoviesController.php";
  $movies = new MoviesController();
 $movie = $movies->getMovie($_GET['id']);
-// var_dump($movie); die();
+// var_dump($movie); exit();
     if(($_SERVER['REQUEST_METHOD'])== 'POST'){
        
-        $movies->addMovies();
+        $movies->editMovies($_GET['id']);
     }
 ?>
 <!DOCTYPE html>
@@ -35,7 +35,6 @@ $movie = $movies->getMovie($_GET['id']);
 
 
     <!-- Include English language -->
-    <script src="js/plugins/datepicker/dist/js/i18n/datepicker.en.js"></script>
 
     <style>
         .page-link {
@@ -200,8 +199,12 @@ $movie = $movies->getMovie($_GET['id']);
                             <?php
                                  include_once"../class/Crud.php";
                                  $crud = new Crud();
+                                 $movie_id = $movie[0]['mv_id'];
                                  $genres = $crud->read("select * from genres", false);
-                                 $current_genres = explode(',',$movie[0]['genres']);
+                                 $current_genres = $crud->read("select * from mv_genres
+                                                                join genres on gnr_id = mvg_ref_genre
+                                                                where mvg_ref_movie = $movie_id");
+                                                              
                             ?>
                             <select data-placeholder="Select Genre(s)..." multiple class="form-control genre"  name="genres[]" id="genre[]">
                                 <?php
@@ -212,7 +215,7 @@ $movie = $movies->getMovie($_GET['id']);
 
                                  <?php
                                      foreach ($current_genres as $key => $genre) { ?>
-                                       <option value="0" selected="selected"><?=$genre?></option>   
+                                       <option value="<?=$genre['gnr_id'] ?>" selected="selected"><?=$genre['gnr_name']?></option>   
                                   <?php } ?>
                                 
                                   
@@ -267,6 +270,7 @@ $movie = $movies->getMovie($_GET['id']);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js" integrity="sha512-RCgrAvvoLpP7KVgTkTctrUdv7C6t7Un3p1iaoPr1++3pybCyCsCZZN7QEHMZTcJTmcJ7jzexTO+eFpHk4OCFAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js" integrity="sha512-eSeh0V+8U3qoxFnK3KgBsM69hrMOGMBy3CNxq/T4BArsSQJfKVsKb5joMqIPrNMjRQSTl4xG8oJRpgU2o9I7HQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="js/plugins/datepicker/dist/js/i18n/datepicker.en.js"></script>
 <script src="../js/app.js"></script>
 </body>
 </html>

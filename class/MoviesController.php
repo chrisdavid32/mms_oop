@@ -1,6 +1,7 @@
 <?php
     
 include_once"Crud.php";
+include_once"Session.php";
 
 class MoviesController{
 
@@ -19,18 +20,35 @@ class MoviesController{
       $movie_id =  $this->crud->create($data, 'movies');
 
         $movies_genres = isset($_POST['genres']) ? $_POST['genres']: "";
+
         $this->createMoviesGenre($movies_genres, $movie_id);  
+
         $this->saveAndUploadCoverImage($movie_id);
+
+        Session::set('sucess-message', 'Movie Added Successfully!');
+
+        header('location: list-movies.php');
+
     }
 
     public function createMoviesGenre($movies_genres, $movie_id)
     {
+        
+
         foreach ($movies_genres as $key => $genre_id) {
-            $movies_genre_arr = [
-                'mvg_ref_genre' => $genre_id,
-                'mvg_ref_movie' => $movie_id
-            ];
-            $this->crud->create($movies_genre_arr, 'mv_genres');
+
+            $movies_genres = $this->crud->read("SELECT * from mv_genres where mvg_ref_movie = $movie_id and mvg_ref_genre = $genre_id");
+            if(empty($movies_genres)){
+
+                $movies_genre_arr = [
+                    'mvg_ref_genre' => $genre_id,
+                    'mvg_ref_movie' => $movie_id
+                ];
+
+                $this->crud->create($movies_genre_arr, 'mv_genres');
+            }
+           
+           
         }
     }
 
@@ -72,5 +90,43 @@ class MoviesController{
         $result =  $this->crud->read($query);
         return $result;
     }
-    
+
+    public function editMovies($movie_id)
+    {
+        $year_released = date("Y-m-d", strtotime($_POST['mv_year_released']));
+        $mv_title = $_POST['mv_title'];
+        
+        $sql = "UPDATE movies
+                set mv_title = '$mv_title', mv_year_released = '$year_released'
+                WHERE mv_id = $movie_id";
+        
+        $this->crud->update($sql);
+
+        $this->createMoviesGenre($_POST['genres'], $movie_id);
+
+        $this->deleteDeselectedGenres($movie_id);
+
+        //update movies image
+        if(!empty($_FILES['cover_image']['name'])){
+
+            // Delete previous image
+            $this->crud->delete("delete from images where img_ref_movie = $movie_id");
+            $this->saveAndUploadCoverImage($movie_id);
+        }
+
+    }
+
+    public function deleteDeselectedGenres($movie_id)
+    {
+        $movies_genres = $this->crud->read("SELECT * from mv_genres where mvg_ref_movie = $movie_id");
+        
+        // if the genres has been deselected from the select box, remove it from the database
+        foreach ($movies_genres as $key => $movies_genre) {
+            $genre_id = $movies_genre['mvg_ref_genre'];
+            if(!in_array($genre_id, $_POST['genres']))
+            $this->crud->delete("DELETE from mv_genres where mvg_ref_genre = $genre_id");
+        }
+    }
+
+       
 }
