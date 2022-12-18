@@ -1,4 +1,7 @@
 <?php
+    include_once"../class/Session.php";
+    Session::start();
+
     if(($_SERVER['REQUEST_METHOD'])== 'POST'){
         include_once"../class/MoviesController.php";
         $movies = new MoviesController();
